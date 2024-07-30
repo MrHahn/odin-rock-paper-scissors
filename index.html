@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
-    <script src="js/scripts.js"></script>
+    
     <style>
         .wrapper {
             display: flex;
@@ -25,10 +25,12 @@
     <div class="wrapper">
         <h1>Rock Paper Scissors!</h1>
         <div class="button-wrapper">
-            <button data-item="rock" >Rock</button>
-            <button data-item="paper">Paper</button>
-            <button data-item="scissors">Scissors</button>
+            <button class="game-btn" data-item="rock" >Rock</button>
+            <button class="game-btn" data-item="paper">Paper</button>
+            <button class="game-btn" data-item="scissors">Scissors</button>
         </div>
+        <p class="winner-message"></p>
     </div>
+    <script src="js/scripts.js"></script>
 </body>
 </html>
