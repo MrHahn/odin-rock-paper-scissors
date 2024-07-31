@@ -6,7 +6,7 @@ let computerScore = 0;
 let winnersMessage = document.querySelector('.winner-message');
 let humanScoreDisplay = document.querySelector('.player');
 let computerScoreDisplay = document.querySelector('.computer');
-let roundNumber = 0;
+let roundNumber = 1;
 let roundNumberDisplay = document.querySelector('.round-number');
 
 function getComputerChoice(){
@@ -23,8 +23,6 @@ function updateRoundNumber(){
     roundNumberDisplay.textContent = roundNumber;
 }
 
-
-
  function getHumanChoice(){
    let humanSelection = this.dataset.item;
    humanWeapon = humanSelection;
@@ -36,63 +34,68 @@ function updateRoundNumber(){
     computerScoreDisplay.textContent = computerScore;
  }
 
+ function checkGameOver(){
+    if (roundNumber >= 5){
+        console.log('gameover');
+        let overlay = document.querySelector('.overlay');
+        let overlayMessage = document.createElement('p');
+        if(humanScore > computerScore){
+            overlayMessage.textContent = 'Congrats! You Win!';
+        }else if (humanScore === computerScore) {
+            overlayMessage.textContent = 'Its a tie, how lame';
+        } else{
+            overlayMessage.textContent = 'You Lose, FATALITY';
+        }
+        overlay.appendChild(overlayMessage);
+        overlay.style.display = 'flex';
+    }else{
+        roundNumber ++;
+        updateScore();
+        updateRoundNumber()
+        updateComputerChoice();
+    }
+ }
+
 
  function playRound(human, computer){
     switch(human.toLowerCase()){
         case 'rock':
             if(computer == 'rock'){
                 winnersMessage.textContent = 'Its a draw, play again';
-                updateComputerChoice();
             }else if (computer == 'paper') {
                 winnersMessage.textContent = 'You lose, Paper beats Rock';
                 computerScore ++;
-                updateScore();
-                updateComputerChoice();
+                
             } else {
                 winnersMessage.textContent = 'You win, Rock beats Scissors ';
                 humanScore ++;
-                updateScore();
-                updateComputerChoice();
             }
             break;
         case 'paper':
             if(computer == 'rock'){
                 winnersMessage.textContent = 'You Win, Paper beats Rock';
                 humanScore ++;
-                updateScore();
-                updateComputerChoice();
             }else if (computer == 'paper') {
                 winnersMessage.textContent = 'Its a draw, play again';
             } else {
                 winnersMessage.textContent = 'You lose, Scissors beats Paper';
                 computerScore ++;
-                updateScore();
-                updateComputerChoice();
             }
             break;
         case 'scissors':
             if(computer == 'rock'){
                 winnersMessage.textContent = 'You lose, Rock Beats Scissors';
                 computerScore ++;
-                updateScore();
-                updateComputerChoice();
             }else if (computer == 'paper') {
                 winnersMessage.textContent = 'You win, Scissors beats Paper';
                 humanScore ++;
-                updateScore();
-                updateComputerChoice();
             } else {
                 winnersMessage.textContent = 'Its a draw, play again';
-                updateComputerChoice();
             }
             break;      
     }
-    roundNumber ++;
-    updateRoundNumber()
+    checkGameOver();
  };
-
-
-
 
 buttons.forEach(button => button.addEventListener('click', getHumanChoice));
 buttons.forEach(button => button.addEventListener('click', () => { playRound(humanWeapon, computerWeapon) }));
